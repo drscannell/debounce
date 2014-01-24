@@ -9,17 +9,17 @@ I've converted the code into a callback model to maintain the object scope of th
 In order to accommodate multiple, simultaneous debouncing schemes, the method creates an object as an instance property, in which it tracks timeouts. I don't love this technique, but it seems effective as long as multiple callbacks aren't exactly the same.
 
 ```
-	handleSomething: (event) =>
-		@debounce 500, false, =>
-			@expensiveMethod event.something
+handleSomething: (event) =>
+	@debounce 500, false, =>
+		@expensiveMethod event.something
 
-	debounce: (threshold, execAsap, callback) =>
-		@debounceTimeout ?= {}
-		if @debounceTimeout[callback]
-			clearTimeout @debounceTimeout[callback]
-		else if execAsap
-			callback()
-		@debounceTimeout[callback] = setTimeout callback, threshold
+debounce: (threshold, execAsap, callback) =>
+	@debounceTimeout ?= {}
+	if @debounceTimeout[callback]
+		clearTimeout @debounceTimeout[callback]
+	else if execAsap
+		callback()
+	@debounceTimeout[callback] = setTimeout callback, threshold
 ```
 
 
